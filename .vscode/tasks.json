@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build Project",
+            "command": "mingw32-make.exe",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Clean Build",
+            "command": "rm -r build",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Program Memory",
+            "command": "openocd.exe",
+            "args": [
+                "-f", "interface/stlink.cfg",
+                "-c", "adapter speed 100",
+                "-f", "target/stm32f1x.cfg",
+                "-c", "init",
+                "-c", "reset halt",
+                "-c", "program build/ODEV1.elf verify reset exit"
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "problemMatcher": [],
+            "group": "none"
+        }
+    ]
+}
